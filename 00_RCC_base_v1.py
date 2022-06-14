@@ -1,4 +1,4 @@
-# recipe cost calulator program
+# recipe cost calculator program
 # v1 - outlining where components will go
 
 # functions go here
