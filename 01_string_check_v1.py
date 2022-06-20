@@ -15,7 +15,7 @@ def string_checker(question):
             break
 
         else:
-            print("sorry that is not a valid response")
+            print("Sorry that is not a valid response.")
             print()
 
 # *** Main Routine starts here ***
