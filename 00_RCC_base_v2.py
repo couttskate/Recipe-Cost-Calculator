@@ -1,5 +1,5 @@
 # recipe cost calculator program
-# v1 - outlining where components will go, adding string and float checker and basic welcome info
+# v2 - adding ingredient info function
 
 # functions go here
 
@@ -58,12 +58,13 @@ print()
 
 # call string checker for recipe name
 recipe_name = string_checker("What is your recipe called?")
-print("Your recipe is: ", recipe_name)
 
 # call float checker for serving size
 serving_size = float_checker("Please enter the serving size for this recipe: ")
-print("Your serving size is:", serving_size)
+
 # repeat info (for testing purposes)
+print("Your recipe is: ", recipe_name)
+print("Your serving size is:", serving_size)
 
 # while loop for ingredients
 
