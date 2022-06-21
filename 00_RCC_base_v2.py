@@ -67,8 +67,9 @@ print("Your recipe is: ", recipe_name)
 print("Your serving size is:", serving_size)
 
 # while loop for ingredients
-
-# call ingredient info function
+ingredients = ""
+while ingredients != "xxx":
+    # call ingredient info function
 
 # calculating total and per serve price
 
