@@ -37,8 +37,8 @@ def float_checker(question):
 
 # while loop for ingredients
 ingredient_name = ""
+ingredient_info = []
 while ingredient_name != "xxx":
-    ingredient_info = []
     ingredient_name = string_checker("What is your ingredient called? ")
     if ingredient_name == "Xxx":
         break
