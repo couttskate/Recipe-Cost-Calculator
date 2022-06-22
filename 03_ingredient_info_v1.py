@@ -40,11 +40,16 @@ ingredient_name = ""
 while ingredient_name != "xxx":
     ingredient_info = []
     ingredient_name = string_checker("What is your ingredient called? ")
-    ingredient_needed = float_checker("What quantity of {} do you need?".format(ingredient_name))
-    ingredient_given = float_checker("What is the closest quantity you can buy {} at the store?".format(ingredient_name))
-    grocery_price = float_checker("What is the price of {} at the store?".format(ingredient_name))
-    new_info = (ingredient_name, ingredient_needed, ingredient_given, grocery_price)
-    ingredient_info.extend(new_info)
+    if ingredient_name == "Xxx":
+        break
+    else:
+        ingredient_info.append(ingredient_name)
+        ingredient_needed = float_checker("What quantity of {} do you need?".format(ingredient_name))
+        ingredient_info.append(ingredient_needed)
+        ingredient_given = float_checker("What is the closest quantity you can buy {} at the store?".format(ingredient_name))
+        ingredient_info.append(ingredient_given)
+        grocery_price = float_checker("What is the price of {} at the store?".format(ingredient_name))
+        ingredient_info.append(grocery_price)
 
 print(ingredient_info)
 
