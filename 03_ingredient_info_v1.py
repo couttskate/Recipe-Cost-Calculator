@@ -1,4 +1,3 @@
-import pandas
 # ingredient info function
 # v1 - ask for ingredient name, quantities and price
 

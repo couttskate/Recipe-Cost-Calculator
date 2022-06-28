@@ -1,5 +1,5 @@
 # recipe cost calculator program
-# v2 - adding ingredient info function
+# v2 - adding ingredient info
 
 # functions go here
 
@@ -67,10 +67,22 @@ print("Your recipe is: ", recipe_name)
 print("Your serving size is:", serving_size)
 
 # while loop for ingredients
-ingredients = ""
-while ingredients != "xxx":
-    # call ingredient info function
+ingredient_name = ""
+ingredient_info = []
+while ingredient_name != "xxx":
+    ingredient_name = string_checker("What is your ingredient called? ")
+    if ingredient_name == "Xxx":
+        break
+    else:
+        ingredient_info.append(ingredient_name)
+        ingredient_needed = float_checker("What quantity of {} do you need?".format(ingredient_name))
+        ingredient_info.append(ingredient_needed)
+        ingredient_given = float_checker("What is the closest quantity you can buy {} at the store?".format(ingredient_name))
+        ingredient_info.append(ingredient_given)
+        grocery_price = float_checker("What is the price of {} at the store?".format(ingredient_name))
+        ingredient_info.append(grocery_price)
 
+print(ingredient_info)
 # calculating total and per serve price
 
 # print all
