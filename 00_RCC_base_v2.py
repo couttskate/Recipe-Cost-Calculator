@@ -81,8 +81,12 @@ while ingredient_name != "xxx":
         ingredient_info.append(ingredient_given)
         grocery_price = float_checker("What is the price of {} at the store?".format(ingredient_name))
         ingredient_info.append(grocery_price)
+        price_per_gram = grocery_price / ingredient_given
+        ingredient_cost = price_per_gram * ingredient_needed
+        ingredient_info.append(ingredient_cost)
 
 print(ingredient_info)
+
 # calculating total and per serve price
 
 # print all
