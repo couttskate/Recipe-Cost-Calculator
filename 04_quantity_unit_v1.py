@@ -35,8 +35,10 @@ def string_checker(question):
             print()
 
 # main routine
-ingredient_name = string_checker("What is your ingredient called? ")
-quantity = float_checker("What quantity of {} do you need?".format(ingredient_name))
+# because I am not testing ingredient name, it is already set to save time
+ingredient_name = "Honey"
+
+quantity = string_checker("What quantity of {} do you need?".format(ingredient_name))
 
 # regular expression to find if item starts with a number
 number_regex = "^[1-9]"
@@ -58,9 +60,8 @@ if re.match(number_regex, quantity):
     amount = int(quantity[0])
     unit = quantity[1:]
 else:
-        amount = 1
-        unit = unit
+    amount = 1
+    unit = quantity
 
 # print for testing purposes
-print("You need {}".format(ingredient_needed))
-print("At the store you can buy {}".format(ingredient_given))
+print("You need {} {}".format(amount, unit))
