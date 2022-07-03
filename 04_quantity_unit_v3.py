@@ -43,11 +43,19 @@ ingredient_name = "Honey"
 quantity = string_checker("What quantity of {} do you need?".format(ingredient_name))
 
 # using a regular expression to split the string into two after the first alphabet letter
-res = re.split('(\d+)', quantity)
-res.remove(res[0])
-print(res)
-amount = res[0]
-unit = res[1]
+quantity_list = re.split('(\d+)', quantity)
+
+while len(quantity) != 2:
+    print("Sorry, you didn’t include both the amount and the unit. Please try again.")
+    print()
+    quantity = string_checker("What quantity of {} do you need?".format(ingredient_name))
+    quantity_list = re.split('(\d+)', quantity)
+else:
+    quantity_list.remove(quantity_list[0])
+    print(quantity_list)
+
+amount = quantity_list[0]
+unit = quantity_list[1]
 
 # valid dry units holds list of all dry units
 # each item in valid units is a list with
