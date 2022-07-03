@@ -1,7 +1,8 @@
 import re
 # quantity unit collector
 # v1 - create dictionary and layout, try out number regex
-# works correctly (for 1 digit only-numbers) as of @25/5/22
+# v2 - number regex is working (using re.split) but very breakable
+# works correctly as of @
 
 # functions needed
 
@@ -38,10 +39,15 @@ def string_checker(question):
 # because I am not testing ingredient name, it is already set to save time
 ingredient_name = "Honey"
 
+# calling string checker to make sure no empty strings are entered
 quantity = string_checker("What quantity of {} do you need?".format(ingredient_name))
 
-# regular expression to find if item starts with a number
-number_regex = "^[1-9]"
+# using a regular expression to split the string into two after the first alphabet letter
+res = re.split('(\d+)', quantity)
+res.remove(res[0])
+print(res)
+amount = res[0]
+unit = res[1]
 
 # valid dry units holds list of all dry units
 # each item in valid units is a list with
@@ -55,13 +61,6 @@ valid_dry_units = [
     ["Tablespoons", "tbsp", "e"],
 ]
 
-# if item has a number, separate it into two (number / item)
-if re.match(number_regex, quantity):
-    amount = int(quantity[0])
-    unit = quantity[1:]
-else:
-    amount = 1
-    unit = quantity
 
 # print for testing purposes
 print("You need {} {}".format(amount, unit))

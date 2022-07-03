@@ -1,7 +1,8 @@
 import re
 # quantity unit collector
-# v1 - create dictionary and number regex
-# works correctly as of @4/6/22
+# v1 - create dictionary and layout, try out number regex
+# v2 - number regex is working (using re.split) but very breakable
+# basic function works as of @4/6/22
 
 # functions needed
 
