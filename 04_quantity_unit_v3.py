@@ -1,10 +1,13 @@
 import re
+
+
 # quantity unit collector
-# v1 - create dictionary and layout, try out number regex
+# v1 - create layout, try out number regex
 # v2 - number regex is working (using re.split) but very breakable
 # works correctly as of @
 
 # functions needed
+
 
 # float checker function
 def float_checker(question):
@@ -19,9 +22,10 @@ def float_checker(question):
         # if an integer is not entered, display an error
         except ValueError:
             print(error)
+
+
 # string checker function
 def string_checker(question):
-
     valid = False
     while not valid:
 
@@ -35,6 +39,7 @@ def string_checker(question):
             print("Sorry that is not a valid response.")
             print()
 
+
 # main routine
 # because I am not testing ingredient name, it is already set to save time
 ingredient_name = "Honey"
@@ -45,30 +50,28 @@ quantity = string_checker("What quantity of {} do you need?".format(ingredient_n
 # using a regular expression to split the string into two after the first alphabet letter
 quantity_list = re.split('(\d+)', quantity)
 
-while len(quantity) != 2:
+print(quantity_list)
+# while there is an empty item in the list, delete it
+while ("" in quantity_list):
+    quantity_list.remove("")
+
+print(quantity_list)
+
+while len(quantity_list) < 2:
     print("Sorry, you didn’t include both the amount and the unit. Please try again.")
     print()
     quantity = string_checker("What quantity of {} do you need?".format(ingredient_name))
     quantity_list = re.split('(\d+)', quantity)
+    print(quantity_list)
+    while "" in quantity_list:
+        quantity_list.remove("")
+    print(quantity_list)
 else:
-    quantity_list.remove(quantity_list[0])
+    print("Valid")
     print(quantity_list)
 
 amount = quantity_list[0]
 unit = quantity_list[1]
-
-# valid dry units holds list of all dry units
-# each item in valid units is a list with
-# valid options for each unit <full name, letter code (a-e)
-# , and possible abbreviations etc>
-valid_dry_units = [
-    ["Grams", "G", "a"],
-    ["Kilograms", "Kgs", "b"],
-    ["Cups", "c"],
-    ["Teaspoons", "tsp", "d"],
-    ["Tablespoons", "tbsp", "e"],
-]
-
 
 # print for testing purposes
 print("You need {} {}".format(amount, unit))

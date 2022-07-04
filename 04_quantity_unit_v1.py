@@ -1,6 +1,6 @@
 import re
 # quantity unit collector
-# v1 - create dictionary and layout, try out number regex
+# v1 - create layout, try out number regex
 # works correctly (for 1 digit only-numbers) as of @25/5/22
 
 # functions needed
@@ -42,18 +42,6 @@ quantity = string_checker("What quantity of {} do you need?".format(ingredient_n
 
 # regular expression to find if item starts with a number
 number_regex = "^[1-9]"
-
-# valid dry units holds list of all dry units
-# each item in valid units is a list with
-# valid options for each unit <full name, letter code (a-e)
-# , and possible abbreviations etc>
-valid_dry_units = [
-    ["Grams", "G", "a"],
-    ["Kilograms", "Kgs", "b"],
-    ["Cups", "c"],
-    ["Teaspoons", "tsp", "d"],
-    ["Tablespoons", "tbsp", "e"],
-]
 
 # if item has a number, separate it into two (number / item)
 if re.match(number_regex, quantity):

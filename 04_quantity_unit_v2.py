@@ -1,6 +1,6 @@
 import re
 # quantity unit collector
-# v1 - create dictionary and layout, try out number regex
+# v1 - create layout, try out number regex
 # v2 - number regex is working (using re.split) but very breakable
 # basic function works as of @4/6/22
 
@@ -48,19 +48,6 @@ res.remove(res[0])
 print(res)
 amount = res[0]
 unit = res[1]
-
-# valid dry units holds list of all dry units
-# each item in valid units is a list with
-# valid options for each unit <full name, letter code (a-e)
-# , and possible abbreviations etc>
-valid_dry_units = [
-    ["Grams", "G", "a"],
-    ["Kilograms", "Kgs", "b"],
-    ["Cups", "c"],
-    ["Teaspoons", "tsp", "d"],
-    ["Tablespoons", "tbsp", "e"],
-]
-
 
 # print for testing purposes
 print("You need {} {}".format(amount, unit))
