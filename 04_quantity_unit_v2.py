@@ -6,6 +6,7 @@ import re
 
 # functions needed
 
+
 # float checker function
 def float_checker(question):
     error = "This is not a valid number."
@@ -19,6 +20,8 @@ def float_checker(question):
         # if an integer is not entered, display an error
         except ValueError:
             print(error)
+
+
 # string checker function
 def string_checker(question):
 

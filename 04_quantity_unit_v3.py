@@ -4,7 +4,8 @@ import re
 # quantity unit collector
 # v1 - create layout, try out number regex
 # v2 - number regex is working (using re.split) but very breakable
-# works correctly as of @
+# v3 - added in a while loop to ensure no empty list items
+# works correctly as of @5/7/22
 
 # functions needed
 
@@ -50,25 +51,17 @@ quantity = string_checker("What quantity of {} do you need?".format(ingredient_n
 # using a regular expression to split the string into two after the first alphabet letter
 quantity_list = re.split('(\d+)', quantity)
 
-print(quantity_list)
 # while there is an empty item in the list, delete it
 while ("" in quantity_list):
     quantity_list.remove("")
-
-print(quantity_list)
 
 while len(quantity_list) < 2:
     print("Sorry, you didn’t include both the amount and the unit. Please try again.")
     print()
     quantity = string_checker("What quantity of {} do you need?".format(ingredient_name))
     quantity_list = re.split('(\d+)', quantity)
-    print(quantity_list)
     while "" in quantity_list:
         quantity_list.remove("")
-    print(quantity_list)
-else:
-    print("Valid")
-    print(quantity_list)
 
 amount = quantity_list[0]
 unit = quantity_list[1]
