@@ -61,7 +61,15 @@ def quantity_unit(question, ingredient_name):
         quantity_list = re.split('(\d+)', quantity)
         while "" in quantity_list:
             quantity_list.remove("")
+    amount = quantity_list[0]
+    unit = quantity_list[1]
+    valid_units = {
+      "grams": ["Grams", "Gram"],
+      "cups": ["Cups", "Cup"],
+      "teaspoons": ["Tsp", "Teaspoons", "Teaspoon"],
+    "tablespoons": ["Tbsp", ""]
 
+    }
     return quantity_list
 
 
