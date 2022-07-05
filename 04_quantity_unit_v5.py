@@ -42,8 +42,25 @@ def string_checker(question):
             print()
 
 
+def list_checker (choice,options):
+    for var_list in options:
+
+            #if the unit is in one of the lists, return the full
+            if choice in var_list:
+
+                #get full name of the unit and put it
+                #in title case so it looks nice when outputted
+                chosen = var_list[0].title()
+                is_valid = "yes"
+                break
+
+            # if the chosen unit is not valid, set unit_ok to no
+            else:
+                is_valid = "no"
+
+
 # amount and unit function
-def quantity_unit(question, ingredient_name):
+def quantity_unit(question, ingredient):
     # calling string checker to make sure no empty strings are entered
     quantity = string_checker(question)
 
@@ -57,19 +74,28 @@ def quantity_unit(question, ingredient_name):
     while len(quantity_list) < 2:
         print("Sorry, you didn’t include both the amount and the unit. Please try again.")
         print()
-        quantity = string_checker("What quantity of {} do you need?".format(ingredient_name))
+        quantity = string_checker("What quantity of {} do you need?".format(ingredient))
         quantity_list = re.split('(\d+)', quantity)
         while "" in quantity_list:
             quantity_list.remove("")
-    amount = quantity_list[0]
-    unit = quantity_list[1]
-    valid_units = {
-      "grams": ["Grams", "Gram"],
-      "cups": ["Cups", "Cup"],
-      "teaspoons": ["Tsp", "Teaspoons", "Teaspoon"],
-    "tablespoons": ["Tbsp", ""]
+    # second item in list is the measurement unit
+    unit_q = quantity_list[1]
+    print(unit_q)
+    # dictionary of valid measurement units
+    valid_units = [
+      ["grams", "Grams", "Gram", "G"],
+      ["cups", "Cups", "Cup"],
+      ["teaspoons", "Tsp", "Teaspoons", "Teaspoon"],
+      ["tablespoons", "Tbsp", "Tablespoon"],
+      ["eggs", "Eggs", "Egg"],
+      ["kilograms", "Kilograms", "Kgs"]
+    ]
+    print(valid_units)
 
-    }
+    # checks to see if the unit entered by user is valid
+    unit_choice = string_checker(unit_q, valid_units)
+    quantity_list.pop()
+    quantity_list.append(unit_choice)
     return quantity_list
 
 
