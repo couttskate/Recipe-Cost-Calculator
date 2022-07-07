@@ -1,3 +1,4 @@
+# code adapted from "finxter.com"
 # Method 1: re.split()
 import re
 quantity = '111grams'
