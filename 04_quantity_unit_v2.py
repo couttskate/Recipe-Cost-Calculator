@@ -47,6 +47,8 @@ quantity = string_checker("What quantity of {} do you need?".format(ingredient_n
 
 # using a regular expression to split the string into two after the first alphabet letter
 res = re.split('(\d+)', quantity)
+# the split function will create spaces aka empty list item which
+# i need to remove to get the accurate list item for amount and unit
 res.remove(res[0])
 print(res)
 amount = res[0]
