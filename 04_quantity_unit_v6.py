@@ -46,52 +46,6 @@ def string_checker(question):
             print()
 
 
-# valid unit checker function
-def valid_unit(entered_unit):
-    # list of valid measurement units
-    valid_units = [
-        ["grams", "Grams", "Gram", "G"],
-        ["cups", "Cups", "Cup"],
-        ["teaspoons", "Tsp", "Teaspoons", "Teaspoon"],
-        ["tablespoons", "Tbsp", "Tablespoon"],
-        ["eggs", "Eggs", "Egg"],
-        ["kilograms", "Kilograms", "Kgs"]
-    ]
-
-    key_to_lookup = entered_unit
-    accept_unit = False
-    for i in valid_units:
-        if key_to_lookup in i:
-            accept_unit = True
-
-    while not accept_unit:
-        key_to_lookup = entered_unit
-        for i in valid_units:
-            if key_to_lookup in i:
-                break
-        print("The unit you have used is not registered with this program, try again.")
-        print()
-        # calling string checker to make sure no empty strings are entered
-        quantity = string_checker(question)
-
-        # using a regular expression to split the string into two after the first alphabet letter
-        quantity_list = re.split('(\d+)', quantity)
-
-        # while there is an empty item in the list, delete it
-        while "" in quantity_list:
-            quantity_list.remove("")
-
-        while len(quantity_list) < 2:
-            print("Sorry, you did not include both the amount and the unit. Please try again.")
-            print()
-            quantity = string_checker("What quantity of {} do you need?".format(ingredient))
-            quantity_list = re.split('(\d+)', quantity)
-            while "" in quantity_list:
-                quantity_list.remove("")
-
-        # second item in list is the measurement unit
-        unit_q = quantity_list[1]
-
 # amount and unit function
 def quantity_unit(question, ingredient):
     # calling string checker to make sure no empty strings are entered
@@ -104,31 +58,68 @@ def quantity_unit(question, ingredient):
     while "" in quantity_list:
         quantity_list.remove("")
 
+    # while there are less than 2 items in list, ask for unit and amount again
     while len(quantity_list) < 2:
-        print("Sorry, you didn’t include both the amount and the unit. Please try again.")
+        print("Sorry, you did not include both the amount and the unit. Please try again.")
         print()
         quantity = string_checker("What quantity of {} do you need?".format(ingredient))
+        # using a regular expression to split user input list items,
+        # splitting after the first non-digit character
         quantity_list = re.split('(\d+)', quantity)
+        # remove empty items from list again to make sure the loop will exit with correct answer
         while "" in quantity_list:
             quantity_list.remove("")
-
-    # second item in list is the measurement unit
-    unit_q = quantity_list[1]
-
-    accepted_unit = valid_unit(unit_q)
-
     return quantity_list
+
+
+# valid unit checker function
+def valid_unit(entered_unit, quantity_question, test_ingredient):
+    # list of valid measurement units
+    valid_units = [
+        ["grams", "Grams", "Gram", "G"],
+        ["cups", "Cups", "Cup"],
+        ["teaspoons", "Tsp", "Teaspoons", "Teaspoon"],
+        ["tablespoons", "Tbsp", "Tablespoon"],
+        ["eggs", "Eggs", "Egg"],
+        ["kilograms", "Kilograms", "Kgs"]
+    ]
+
+    key_to_lookup = entered_unit
+    accept_unit = False
+    # initial test to see if unit is in valid list
+    for i in valid_units:
+        # if unit is registered, return it and break
+        if key_to_lookup in i:
+            accept_unit = True
+
+    while not accept_unit:
+        key_to_lookup = entered_unit
+        for i in valid_units:
+            if key_to_lookup in i:
+                print("yay")
+                break
+        print("The unit you have used is not registered with this program, try again.")
+        print()
+        try_again = quantity_unit(quantity_question, test_ingredient)
+        entered_unit = try_again[1].strip()
+
+    return entered_unit
 
 
 # main routine
 # because I am not testing ingredient name, it is already set to save time
 ingredient_name = "Honey"
 
+# set quantity question
+ask_quantity = ("What quantity of {} can you buy at the store?".format(ingredient_name))
+
 # call quantity function
-list_for_quantity = quantity_unit("What quantity of {} can you buy at the store?".format(ingredient_name),
-                                  ingredient_name)
+list_for_quantity = quantity_unit(ask_quantity, ingredient_name)
 amount = list_for_quantity[0].strip()
 unit = list_for_quantity[1].strip()
+print(list_for_quantity, amount, unit)
 
+# check unit is ok
+valid_unit(unit, ask_quantity, ingredient_name)
 # print for testing purposes
 print("You need {} {}".format(amount, unit))
