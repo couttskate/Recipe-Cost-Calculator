@@ -93,7 +93,7 @@ def quantity_unit(question, ingredient):
     print(valid_units)
 
     # checks to see if the unit entered by user is valid
-    unit_choice = string_checker(unit_q, valid_units)
+    unit_choice = list_checker(unit_q, valid_units)
     quantity_list.pop()
     quantity_list.append(unit_choice)
     return quantity_list
@@ -105,8 +105,8 @@ ingredient_name = "Honey"
 
 # call quantity function
 quantity_list = quantity_unit("What quantity of {} can you buy at the store?".format(ingredient_name), ingredient_name)
-amount = quantity_list[0]
-unit = quantity_list[1]
+amount = quantity_list[0].strip()
+unit = quantity_list[1].strip()
 
 # print for testing purposes
 print("You need {} {}".format(amount, unit))

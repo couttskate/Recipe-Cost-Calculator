@@ -63,8 +63,8 @@ while len(quantity_list) < 2:
     while "" in quantity_list:
         quantity_list.remove("")
 
-amount = quantity_list[0]
-unit = quantity_list[1]
+amount = quantity_list[0].strip()
+unit = quantity_list[1].strip()
 
 # print for testing purposes
 print("You need {} {}".format(amount, unit))

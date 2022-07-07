@@ -71,8 +71,8 @@ ingredient_name = "Honey"
 
 # call quantity function
 quantity_list = quantity_unit("What quantity of {} can you buy at the store?".format(ingredient_name), ingredient_name)
-amount = quantity_list[0]
-unit = quantity_list[1]
+amount = quantity_list[0].strip()
+unit = quantity_list[1].strip()
 
 # print for testing purposes
 print("You need {} {}".format(amount, unit))
