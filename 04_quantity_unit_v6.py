@@ -7,7 +7,10 @@ import re
 # v3 - added in a while loop to ensure no empty list items
 # v4 - put code into function
 # v5 - made error prevention for entering a valid unit
-# works correctly as of @7/7/22
+# v6 - put the code for inputting the quantity in its own function, that way it
+# can be called to other functions for error prevention as necessary - about making
+# the code more concise.
+# works correctly as of @8/7/22
 
 # functions needed
 
@@ -43,29 +46,8 @@ def string_checker(question):
             print()
 
 
-# amount and unit function
-def quantity_unit(question, ingredient):
-    # calling string checker to make sure no empty strings are entered
-    quantity = string_checker(question)
-
-    # using a regular expression to split the string into two after the first alphabet letter
-    quantity_list = re.split('(\d+)', quantity)
-
-    # while there is an empty item in the list, delete it
-    while "" in quantity_list:
-        quantity_list.remove("")
-
-    while len(quantity_list) < 2:
-        print("Sorry, you didn’t include both the amount and the unit. Please try again.")
-        print()
-        quantity = string_checker("What quantity of {} do you need?".format(ingredient))
-        quantity_list = re.split('(\d+)', quantity)
-        while "" in quantity_list:
-            quantity_list.remove("")
-
-    # second item in list is the measurement unit
-    unit_q = quantity_list[1]
-
+# valid unit checker function
+def valid_unit(entered_unit):
     # list of valid measurement units
     valid_units = [
         ["grams", "Grams", "Gram", "G"],
@@ -76,14 +58,14 @@ def quantity_unit(question, ingredient):
         ["kilograms", "Kilograms", "Kgs"]
     ]
 
-    key_to_lookup = unit_q
+    key_to_lookup = entered_unit
     accept_unit = False
     for i in valid_units:
         if key_to_lookup in i:
             accept_unit = True
 
     while not accept_unit:
-        key_to_lookup = unit_q
+        key_to_lookup = entered_unit
         for i in valid_units:
             if key_to_lookup in i:
                 break
@@ -110,7 +92,32 @@ def quantity_unit(question, ingredient):
         # second item in list is the measurement unit
         unit_q = quantity_list[1]
 
-        return quantity_list
+# amount and unit function
+def quantity_unit(question, ingredient):
+    # calling string checker to make sure no empty strings are entered
+    quantity = string_checker(question)
+
+    # using a regular expression to split the string into two after the first alphabet letter
+    quantity_list = re.split('(\d+)', quantity)
+
+    # while there is an empty item in the list, delete it
+    while "" in quantity_list:
+        quantity_list.remove("")
+
+    while len(quantity_list) < 2:
+        print("Sorry, you didn’t include both the amount and the unit. Please try again.")
+        print()
+        quantity = string_checker("What quantity of {} do you need?".format(ingredient))
+        quantity_list = re.split('(\d+)', quantity)
+        while "" in quantity_list:
+            quantity_list.remove("")
+
+    # second item in list is the measurement unit
+    unit_q = quantity_list[1]
+
+    accepted_unit = valid_unit(unit_q)
+
+    return quantity_list
 
 
 # main routine
