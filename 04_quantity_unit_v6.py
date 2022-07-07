@@ -96,14 +96,12 @@ def valid_unit(entered_unit, quantity_question, test_ingredient):
         key_to_lookup = entered_unit
         for i in valid_units:
             if key_to_lookup in i:
-                print("yay")
+                return key_to_lookup
                 break
         print("The unit you have used is not registered with this program, try again.")
         print()
         try_again = quantity_unit(quantity_question, test_ingredient)
         entered_unit = try_again[1].strip()
-
-    return entered_unit
 
 
 # main routine
@@ -115,11 +113,11 @@ ask_quantity = ("What quantity of {} can you buy at the store?".format(ingredien
 
 # call quantity function
 list_for_quantity = quantity_unit(ask_quantity, ingredient_name)
-amount = list_for_quantity[0].strip()
-unit = list_for_quantity[1].strip()
-print(list_for_quantity, amount, unit)
+test_amount = list_for_quantity[0].strip()
+test_unit = list_for_quantity[1].strip()
 
 # check unit is ok
-valid_unit(unit, ask_quantity, ingredient_name)
+unit = valid_unit(test_unit, ask_quantity, ingredient_name)
+
 # print for testing purposes
-print("You need {} {}".format(amount, unit))
+print("You need {} {}".format(test_amount, unit))
