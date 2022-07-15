@@ -9,7 +9,7 @@ import re
 # v5 - made error prevention for entering a valid unit
 # v6 - put the code for inputting the quantity in its own function, that way it
 # can be called to other functions for error prevention as necessary - about making
-# the code more concise.
+# the code more concise, also added the comprehensive special character for number regex.
 # works correctly as of @8/7/22
 
 # functions needed
@@ -52,7 +52,7 @@ def quantity_unit(question, ingredient):
     quantity = string_checker(question)
 
     # using a regular expression to split the string into two after the first alphabet letter
-    quantity_list = re.split('(\d+)', quantity)
+    quantity_list = re.split('[-+]?([0-9]*[\x2f\x2e]*[0-9]+|[0-9]+)', quantity)
 
     # while there is an empty item in the list, delete it
     while "" in quantity_list:
@@ -65,7 +65,7 @@ def quantity_unit(question, ingredient):
         quantity = string_checker("What quantity of {} do you need?".format(ingredient))
         # using a regular expression to split user input list items,
         # splitting after the first non-digit character
-        quantity_list = re.split('(\d+)', quantity)
+        quantity_list = re.split('[-+]?([0-9]*[\x2f\x2e]*[0-9]+|[0-9]+)', quantity)
         # remove empty items from list again to make sure the loop will exit with correct answer
         while "" in quantity_list:
             quantity_list.remove("")
@@ -85,15 +85,13 @@ def valid_unit(entered_unit, quantity_question, test_ingredient):
     ]
 
     key_to_lookup = entered_unit
-    accept_unit = False
     # initial test to see if unit is in valid list
     for i in valid_units:
         # if unit is registered, return it and break
         if key_to_lookup in i:
-            accept_unit = True
-
-    while not accept_unit:
-        key_to_lookup = entered_unit
+            return key_to_lookup
+            break
+    while key_to_lookup not in valid_units:
         for i in valid_units:
             if key_to_lookup in i:
                 return key_to_lookup
@@ -101,7 +99,7 @@ def valid_unit(entered_unit, quantity_question, test_ingredient):
         print("The unit you have used is not registered with this program, try again.")
         print()
         try_again = quantity_unit(quantity_question, test_ingredient)
-        entered_unit = try_again[1].strip()
+        key_to_lookup = try_again[1].strip()
 
 
 # main routine
