@@ -12,7 +12,10 @@ import re
 # the code more concise, also added the comprehensive special character for number regex.
 # found error, if user re-entered a different amount after
 # unit error prevention, the program still takes the first amount. fixing this in next version
-# as this code (v6) still mainly works, and I don't want to break it @20/7/22
+# as this code (v6) still mainly works, and I don't want to break it
+# v7 - fixing my error prevention for unit (see above), and reorganising code to be more logical
+# also added in ml and litres to my list as I realised they are pretty common!
+# works correctly as of 21/7/22
 
 # functions needed
 
@@ -47,8 +50,40 @@ def string_checker(question):
             print()
 
 
+# valid unit checker function
+def valid_unit(check_list, quantity_question, test_ingredient):
+    entered_unit = check_list[1]
+    # list of valid measurement units
+    valid_units = [
+        ["grams", "Grams", "Gram", "G"],
+        ["cups", "Cups", "Cup"],
+        ["teaspoons", "Tsp", "Teaspoons", "Teaspoon"],
+        ["tablespoons", "Tbsp", "Tablespoon"],
+        ["eggs", "Eggs", "Egg"],
+        ["kgs", "kg", "kilograms", "Kilograms", "Kgs", "Kg"],
+        ["mL", "ML", "Ml", "mLs", "Mls", "millilitre", "Millilitre", "Millilitres", "millilitres"],
+        ["L", "l", "litre", "Litre", "litres", "Litres"]
+    ]
+
+    key_to_lookup = entered_unit
+    # initial test to see if unit is in valid list
+    for i in valid_units:
+        # if unit is registered, return it and break
+        if key_to_lookup in i:
+            return check_list
+    while key_to_lookup not in valid_units:
+        print("The unit you have used is not registered with this program, try again.")
+        print()
+        check_list = quantity_unit(quantity_question, test_ingredient)
+        key_to_lookup = check_list[1].strip()
+        for i in valid_units:
+            if key_to_lookup in i:
+                return check_list
+
+
 # amount and unit function
 def quantity_unit(question, ingredient):
+    returning_list_quantities = []
     # calling string checker to make sure no empty strings are entered
     quantity = string_checker(question)
 
@@ -70,35 +105,11 @@ def quantity_unit(question, ingredient):
         # remove empty items from list again to make sure the loop will exit with correct answer
         while "" in quantity_list:
             quantity_list.remove("")
-    return quantity_list
 
-
-# valid unit checker function
-def valid_unit(entered_unit, quantity_question, test_ingredient):
-    # list of valid measurement units
-    valid_units = [
-        ["grams", "Grams", "Gram", "G"],
-        ["cups", "Cups", "Cup"],
-        ["teaspoons", "Tsp", "Teaspoons", "Teaspoon"],
-        ["tablespoons", "Tbsp", "Tablespoon"],
-        ["eggs", "Eggs", "Egg"],
-        ["kilograms", "Kilograms", "Kgs"]
-    ]
-
-    key_to_lookup = entered_unit
-    # initial test to see if unit is in valid list
-    for i in valid_units:
-        # if unit is registered, return it and break
-        if key_to_lookup in i:
-            return key_to_lookup
-    while key_to_lookup not in valid_units:
-        for i in valid_units:
-            if key_to_lookup in i:
-                return key_to_lookup
-        print("The unit you have used is not registered with this program, try again.")
-        print()
-        try_again = quantity_unit(quantity_question, test_ingredient)
-        key_to_lookup = try_again[1].strip()
+    # check unit is ok using unit checker, if unit is not registered the program will ask for
+    # amount and unit again
+    returning_list_quantities = valid_unit(quantity_list, ask_quantity, ingredient_name)
+    return returning_list_quantities
 
 
 # main routine
@@ -110,11 +121,8 @@ ask_quantity = ("What quantity of {} can you buy at the store?".format(ingredien
 
 # call quantity function
 list_for_quantity = quantity_unit(ask_quantity, ingredient_name)
-test_amount = list_for_quantity[0].strip()
-test_unit = list_for_quantity[1].strip()
-
-# check unit is ok
-unit = valid_unit(test_unit, ask_quantity, ingredient_name)
+amount = list_for_quantity[0].strip()
+unit = list_for_quantity[1].strip()
 
 # print for testing purposes
-print("You need {} {}".format(test_amount, unit))
+print("You need {} {}".format(amount, unit))
