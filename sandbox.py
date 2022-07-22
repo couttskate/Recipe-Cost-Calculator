@@ -1,3 +1,4 @@
+
 # code to check how to find an item within a list within a list
 
 dict1 = [["grams","g","G","GRAMS","Grams"], ["tablespoons","TBS","tbs","Tablespoons", "TABLESPOONS"]]
@@ -16,3 +17,6 @@ for i in dict1:
             break
         else:
             print("false")
+
+x = 1.0 * 1/2
+print(x)

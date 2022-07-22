@@ -1,26 +1,15 @@
 import re
 
 
-# quantity unit collector
-# v1 - create layout, try out number regex
-# v2 - number regex is working (using re.split) but very breakable
-# v3 - added in a while loop to ensure no empty list items
-# v4 - put code into function
-# v5 - made error prevention for entering a valid unit
-# v6 - put the code for inputting the quantity in its own function, that way it
-# can be called to other functions for error prevention as necessary - about making
-# the code more concise, also added the comprehensive special character for number regex.
-# found error, if user re-entered a different amount after
-# unit error prevention, the program still takes the first amount. fixing this in next version
-# as this code (v6) still mainly works, and I don't want to break it
-# v7 - fixing my error prevention for unit (see above), and reorganising code to be more logical
-# also added in ml and litres to my list as I realised they are pretty common!
-# works correctly as of 21/7/22
+# converting quantities component - users might enter any amount or unit for their quantity,
+# but for the RCC it will be easier if every ingredient quantity is decimals and grams
+
+# v1 - set up amount conversions using an of if/else statement (in a function)
+# works correctly as of 22/7/22
 
 # functions needed
 
 
-# float checker function
 def float_checker(question):
     error = "This is not a valid number."
     valid = False
@@ -37,7 +26,6 @@ def float_checker(question):
 
 # string checker function
 def string_checker(question):
-
     valid = False
     while not valid:
 
@@ -113,6 +101,31 @@ def quantity_unit(question, ingredient):
     return returning_list_quantities
 
 
+# amount conversion function
+def convert_amount(converting_amount):
+    converted_amount = converting_amount
+    # if the amount is a fraction...
+    if "/" in converting_amount:
+        # split the string into the numerator and denominator
+        fraction_list = converting_amount.split("/")
+        numerator = fraction_list[0]
+        denominator = fraction_list[1]
+        # change both strings into integers that can be divided
+        numerator = int(numerator)
+        denominator = int(denominator)
+        # divide numerator by denominator to find decimal equivalent
+        converted_amount = numerator / denominator
+        # return the decimal amount
+        return converted_amount
+    # if the amount is already a decimal, return
+    elif float(converting_amount):
+        return converted_amount
+    # if the amount is an integer, convert to float
+    else:
+        converted_amount = float(converting_amount)
+        return converted_amount
+
+
 # main routine
 # because I am not testing ingredient name, it is already set to save time
 ingredient_name = "Honey"
@@ -125,5 +138,8 @@ list_for_quantity = quantity_unit(ask_quantity, ingredient_name)
 amount = list_for_quantity[0].strip()
 unit = list_for_quantity[1].strip()
 
+# call converting amount function to convert all numbers to floats
+float_amount = convert_amount(amount)
+
 # print for testing purposes
-print("You need {} {}".format(amount, unit))
+print("You need {:.2f} {}".format(float_amount, unit))

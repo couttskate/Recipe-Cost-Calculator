@@ -14,7 +14,6 @@ def string_checker(question):
 
         if response != "":
             return response
-            break
 
         else:
             print("Sorry you cannot leave this blank.")
