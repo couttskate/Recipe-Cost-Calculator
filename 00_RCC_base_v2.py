@@ -1,5 +1,7 @@
 # recipe cost calculator program
-# v2 - adding ingredient info
+
+# v1 - outlining where components will go, adding string and float checker and basic welcome info
+# v2 - originally adding ingredient info component however this has been rethought as it was too difficult
 
 # functions go here
 
