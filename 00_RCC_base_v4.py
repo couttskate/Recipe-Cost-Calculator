@@ -45,7 +45,7 @@ def float_checker(question):
 
 # valid unit checker function
 def valid_unit(check_list, quantity_question, test_ingredient):
-    entered_unit = check_list[1]
+    entered_unit = check_list[1].strip()
     # list of valid measurement units
     valid_units = [
         ["grams", "Grams", "Gram", "G"],
@@ -53,9 +53,9 @@ def valid_unit(check_list, quantity_question, test_ingredient):
         ["teaspoons", "Tsp", "Teaspoons", "Teaspoon"],
         ["tablespoons", "Tbsp", "Tablespoon"],
         ["eggs", "Eggs", "Egg"],
-        ["kgs", "kg", "kilograms", "Kilograms", "Kgs", "Kg"],
+        ["kgs", "kg", "kilograms", "Kilograms", "Kgs", "Kg", "Kilogram", "kilogram"],
         ["mL", "ML", "Ml", "mLs", "Mls", "millilitre", "Millilitre", "Millilitres", "millilitres"],
-        ["L", "l", "litre", "Litre", "litres", "Litres"]
+        ["L", "l", "litre", "Litre", "litres", "Litres", "Ls"]
     ]
 
     key_to_lookup = entered_unit
@@ -64,6 +64,15 @@ def valid_unit(check_list, quantity_question, test_ingredient):
         # if unit is registered, return it and break
         if key_to_lookup in i:
             return check_list
+
+    # check that no invalid fraction is entered (a fraction with decimals) as this is beyond the processing
+    # capabilities of my program
+    while "." in key_to_lookup or "/" in key_to_lookup:
+        print("Sorry, you cannot enter fractions with decimal numbers. Please try again.")
+        print()
+        check_list = quantity_unit(quantity_question, test_ingredient)
+        key_to_lookup = check_list[1].strip()
+
     while key_to_lookup not in valid_units:
         print("The unit you have used is not registered with this program, try again.")
         print()
@@ -139,9 +148,9 @@ def convert_unit(converted_amount, converting_unit):
     tsp = ["teaspoons", "Tsp", "Teaspoons", "Teaspoon"]
     tbsp = ["tablespoons", "Tbsp", "Tablespoon"]
     eggs = ["eggs", "Eggs", "Egg"]
-    kg = ["kgs", "kg", "kilograms", "Kilograms", "Kgs", "Kg"]
+    kg = ["kgs", "kg", "kilograms", "Kilograms", "Kgs", "Kg", "Kilogram"]
     ml = ["mL", "ML", "Ml", "mLs", "Mls", "millilitre", "Millilitre", "Millilitres", "millilitres"]
-    l = ["L", "l", "litre", "Litre", "litres", "Litres"]
+    l = ["L", "l", "litre", "Litre", "litres", "Litres", "Ls"]
 
     # if the quantity is entered in kilograms or litres
     if converting_unit in kg or converting_unit in l:
@@ -275,7 +284,7 @@ while ingredient_name != "Xxx":
         # append ingredient price to total ingredient price list
         ingredient_price_list.append(ingredient_price)
         # print for testing purposes
-        print("The price of {} for your recipe is ${}.".format(ingredient_name, ingredient_price))
+        print("The price of {} for your recipe is ${:.2f}.".format(ingredient_name, ingredient_price))
 
 
 # calculating total and per serve price
@@ -288,5 +297,5 @@ total_ingredient_price = sum(ingredient_price_list)
 serving_price = (total_ingredient_price / serving_size)
 
 # print all
-print("The total ingredient price is: ${}".format(total_ingredient_price))
-print("The price per serve is: ${}".format(serving_price))
+print("The total ingredient price is: ${:.2f}".format(total_ingredient_price))
+print("The price per serve is: ${:.2f}".format(serving_price))

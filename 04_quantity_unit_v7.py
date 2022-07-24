@@ -10,11 +10,12 @@ import re
 # v6 - put the code for inputting the quantity in its own function, that way it
 # can be called to other functions for error prevention as necessary - about making
 # the code more concise, also added the comprehensive special character for number regex.
-# found error, if user re-entered a different amount after
-# unit error prevention, the program still takes the first amount. fixing this in next version
+# found error, if user re-entered a different amount after unit error prevention,
+# the program still takes the first amount. fixing this in next version
 # as this code (v6) still mainly works, and I don't want to break it
 # v7 - fixing my error prevention for unit (see above), and reorganising code to be more logical
-# also added in ml and litres to my list as I realised they are pretty common!
+# also added in ml and litres to my list as I realised they are pretty common! plus added more specific error message
+# for if user enters a fraction with decimals
 # works correctly as of 21/7/22
 
 # functions needed
@@ -53,7 +54,7 @@ def string_checker(question):
 
 # valid unit checker function
 def valid_unit(check_list, quantity_question, test_ingredient):
-    entered_unit = check_list[1]
+    entered_unit = check_list[1].strip()
     # list of valid measurement units
     valid_units = [
         ["grams", "Grams", "Gram", "G"],
@@ -61,9 +62,9 @@ def valid_unit(check_list, quantity_question, test_ingredient):
         ["teaspoons", "Tsp", "Teaspoons", "Teaspoon"],
         ["tablespoons", "Tbsp", "Tablespoon"],
         ["eggs", "Eggs", "Egg"],
-        ["kgs", "kg", "kilograms", "Kilograms", "Kgs", "Kg"],
+        ["kgs", "kg", "kilograms", "Kilograms", "Kgs", "Kg", "Kilogram", "kilogram"],
         ["mL", "ML", "Ml", "mLs", "Mls", "millilitre", "Millilitre", "Millilitres", "millilitres"],
-        ["L", "l", "litre", "Litre", "litres", "Litres"]
+        ["L", "l", "litre", "Litre", "litres", "Litres", "Ls"]
     ]
 
     key_to_lookup = entered_unit
@@ -72,6 +73,15 @@ def valid_unit(check_list, quantity_question, test_ingredient):
         # if unit is registered, return it and break
         if key_to_lookup in i:
             return check_list
+
+    # check that no invalid fraction is entered (a fraction with decimals) as this is beyond the processing
+    # capabilities of my program
+    while "." in key_to_lookup or "/" in key_to_lookup:
+        print("Sorry, you cannot enter fractions with decimal numbers. Please try again.")
+        print()
+        check_list = quantity_unit(quantity_question, test_ingredient)
+        key_to_lookup = check_list[1].strip()
+
     while key_to_lookup not in valid_units:
         print("The unit you have used is not registered with this program, try again.")
         print()

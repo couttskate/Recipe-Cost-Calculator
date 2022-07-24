@@ -41,7 +41,7 @@ def string_checker(question):
 
 # valid unit checker function
 def valid_unit(check_list, quantity_question, test_ingredient):
-    entered_unit = check_list[1]
+    entered_unit = check_list[1].strip()
     # list of valid measurement units
     valid_units = [
         ["grams", "Grams", "Gram", "G"],
@@ -49,9 +49,9 @@ def valid_unit(check_list, quantity_question, test_ingredient):
         ["teaspoons", "Tsp", "Teaspoons", "Teaspoon"],
         ["tablespoons", "Tbsp", "Tablespoon"],
         ["eggs", "Eggs", "Egg"],
-        ["kgs", "kg", "kilograms", "Kilograms", "Kgs", "Kg"],
+        ["kgs", "kg", "kilograms", "Kilograms", "Kgs", "Kg", "Kilogram", "kilogram"],
         ["mL", "ML", "Ml", "mLs", "Mls", "millilitre", "Millilitre", "Millilitres", "millilitres"],
-        ["L", "l", "litre", "Litre", "litres", "Litres"]
+        ["L", "l", "litre", "Litre", "litres", "Litres", "Ls"]
     ]
 
     key_to_lookup = entered_unit
@@ -60,6 +60,15 @@ def valid_unit(check_list, quantity_question, test_ingredient):
         # if unit is registered, return it and break
         if key_to_lookup in i:
             return check_list
+
+    # check that no invalid fraction is entered (a fraction with decimals) as this is beyond the processing
+    # capabilities of my program
+    while "." in key_to_lookup or "/" in key_to_lookup:
+        print("Sorry, you cannot enter fractions with decimal numbers. Please try again.")
+        print()
+        check_list = quantity_unit(quantity_question, test_ingredient)
+        key_to_lookup = check_list[1].strip()
+
     while key_to_lookup not in valid_units:
         print("The unit you have used is not registered with this program, try again.")
         print()
@@ -142,4 +151,4 @@ unit = list_for_quantity[1].strip()
 float_amount = convert_amount(amount)
 
 # print for testing purposes
-print("You need {:.2f} {}".format(float_amount, unit))
+print("You need {} {}".format(float_amount, unit))
