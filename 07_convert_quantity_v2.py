@@ -46,9 +46,9 @@ def valid_unit(check_list, quantity_question, test_ingredient):
     # list of valid measurement units
     valid_units = [
         ["grams", "Grams", "Gram", "G"],
-        ["cups", "Cups", "Cup"],
+        ["cups", "Cups", "Cup", "C"],
         ["teaspoons", "Tsp", "Teaspoons", "Teaspoon"],
-        ["tablespoons", "Tbsp", "Tablespoon"],
+        ["tablespoons", "Tbsp", "Tablespoon", "Tablespoons"],
         ["eggs", "Eggs", "Egg"],
         ["kgs", "kg", "kilograms", "Kilograms", "Kgs", "Kg", "Kilogram", "kilogram"],
         ["mL", "ML", "Ml", "mLs", "Mls", "millilitre", "Millilitre", "Millilitres", "millilitres"],
@@ -141,9 +141,9 @@ def convert_amount(converting_amount):
 def convert_unit(converted_amount, converting_unit):
     # lists of valid measurement units
     grams = ["grams", "Grams", "Gram", "G"]
-    cups = ["cups", "Cups", "Cup"]
+    cups = ["cups", "Cups", "Cup", "C"]
     tsp = ["teaspoons", "Tsp", "Teaspoons", "Teaspoon"]
-    tbsp = ["tablespoons", "Tbsp", "Tablespoon"]
+    tbsp = ["tablespoons", "Tbsp", "Tablespoon", "Tablespoons"]
     eggs = ["eggs", "Eggs", "Egg"]
     kg = ["kgs", "kg", "kilograms", "Kilograms", "Kgs", "Kg", "Kilogram", "kilogram"]
     ml = ["mL", "ML", "Ml", "mLs", "Mls", "millilitre", "Millilitre", "Millilitres", "millilitres"]
